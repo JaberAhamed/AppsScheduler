@@ -8,8 +8,6 @@ plugins {
     id("kotlin-parcelize")
 }
 
-
-
 ksp {
     arg("org.gradle.annotation.processing.options", "-Xlint:deprecation")
     // You might have other KSP arguments here
@@ -82,6 +80,7 @@ dependencies {
     implementation(libs.jetbrains.serialization)
     implementation(libs.jetbrains.serialization.json)
     implementation(libs.play.service.location)
+    implementation(libs.coil)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

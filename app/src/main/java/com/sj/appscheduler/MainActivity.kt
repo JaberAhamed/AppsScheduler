@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import com.sj.appscheduler.ui.screens.home.HomeScreen
 import com.sj.appscheduler.ui.theme.AppSchedulerTheme
 
 class MainActivity : ComponentActivity() {
@@ -24,9 +25,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             AppSchedulerTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
+                    HomeScreen(
                         modifier = Modifier.padding(innerPadding)
+
                     )
                 }
             }
@@ -49,7 +50,6 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     }
 
     Column(modifier = Modifier) {
-
     }
     Text(
         text = "Hello $name!",
