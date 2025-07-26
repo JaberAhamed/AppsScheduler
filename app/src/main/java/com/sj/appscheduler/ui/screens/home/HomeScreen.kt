@@ -3,7 +3,6 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -27,17 +26,18 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sj.appscheduler.models.AppInfoUiModel
 import com.sj.appscheduler.ui.components.AppItemCard
 import com.sj.appscheduler.ui.components.ScheduleDialog
 import com.sj.appscheduler.ui.theme.AppSchedulerTheme
+import com.sj.appscheduler.utils.SelectedAppState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    viewModel: HomeViewModel = viewModel()
+    viewModel: HomeViewModel = hiltViewModel(),
+    navigateToScheduleScreen: () -> Unit
 ) {
     val context = LocalContext.current
     val apps by viewModel.apps.collectAsState()
@@ -71,9 +71,8 @@ fun HomeScreen(
                 CircularProgressIndicator(
                     modifier = Modifier.width(64.dp),
                     color = MaterialTheme.colorScheme.secondary,
-                    trackColor = MaterialTheme.colorScheme.surfaceVariant,
+                    trackColor = MaterialTheme.colorScheme.surfaceVariant
                 )
-
             }
         } else {
             LazyColumn(
@@ -83,10 +82,12 @@ fun HomeScreen(
             ) {
                 items(apps) { app ->
                     AppItemCard(
-                        appInfo = app,
+                        appInfoUiModel = app,
                         onScheduleClick = {
                             selectedApp = app
-                            showDialog = true
+                            // showDialog = true
+                            SelectedAppState.currentSelectedScheduleAppInfo = app
+                            navigateToScheduleScreen()
                         }
                     )
                 }
@@ -119,7 +120,8 @@ fun HomeScreen(
 fun HomeScreenPreview() {
     AppSchedulerTheme {
         HomeScreen(
-            viewModel = hiltViewModel()
+            viewModel = hiltViewModel(),
+            navigateToScheduleScreen = {}
         )
     }
 }

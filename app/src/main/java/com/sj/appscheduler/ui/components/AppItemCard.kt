@@ -1,5 +1,6 @@
 package com.sj.appscheduler.ui.components // AppItemCard.kt
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -7,10 +8,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,7 +28,7 @@ import com.sj.appscheduler.ui.theme.AppSchedulerTheme
 
 @Composable
 fun AppItemCard(
-    appInfo: AppInfoUiModel,
+    appInfoUiModel: AppInfoUiModel,
     onScheduleClick: () -> Unit
 ) {
     val context = LocalContext.current
@@ -36,7 +37,10 @@ fun AppItemCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .clickable {
+                onScheduleClick()
+            },
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Row(
@@ -46,8 +50,8 @@ fun AppItemCard(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
-                painter = rememberAsyncImagePainter(model = appInfo.icon),
-                contentDescription = "${appInfo.name} icon",
+                painter = rememberAsyncImagePainter(model = appInfoUiModel.icon),
+                contentDescription = "${appInfoUiModel.name} icon",
                 modifier = Modifier.size(48.dp)
             )
 
@@ -57,14 +61,14 @@ fun AppItemCard(
                 modifier = Modifier.weight(1f)
             ) {
                 Text(
-                    text = appInfo.name,
+                    text = appInfoUiModel.name,
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
-                    text = appInfo.packageName,
+                    text = appInfoUiModel.packageName,
                     style = MaterialTheme.typography.bodySmall,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
@@ -73,9 +77,15 @@ fun AppItemCard(
 
             Spacer(modifier = Modifier.width(16.dp))
 
-            Button(onClick = onScheduleClick) {
-                Text("Schedule")
-            }
+//            Button(onClick = onScheduleClick) {
+//                Text("Schedule")
+//            }
+
+            Switch(
+                checked = false,
+                onCheckedChange = {
+                }
+            )
         }
     }
 }
@@ -88,7 +98,7 @@ fun AppItemCardPreview() {
 
     AppSchedulerTheme {
         AppItemCard(
-            appInfo = AppInfoUiModel(
+            appInfoUiModel = AppInfoUiModel(
                 name = "Youtube",
                 packageName = "com.android.youtube",
                 icon = drawable

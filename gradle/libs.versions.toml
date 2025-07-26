@@ -25,6 +25,7 @@ converterGson = "3.0.0"
 loggingInterceptor = "5.1.0"
 moshi = "1.15.2"
 coil = "2.6.0"
+room_version = "2.7.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -66,6 +67,9 @@ hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref
 hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 androidx-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version.ref = "uiTextGoogleFonts" }
 play-service-location = {group = "com.google.android.gms", name = "play-services-location", version.ref = "playServiceLocation" }
+
+room-runtime = {group = "androidx.room", name = "room-runtime", version.ref = "room_version" }
+room = {group = "androidx.room", name = "room-compiler", version.ref = "room_version" }
 
 
 

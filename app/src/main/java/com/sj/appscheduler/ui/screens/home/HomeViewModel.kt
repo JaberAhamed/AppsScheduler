@@ -24,7 +24,7 @@ class HomeViewModel @Inject constructor() : ViewModel() {
                 addCategory(Intent.CATEGORY_LAUNCHER)
             }
 
-            val appInfos = pm.queryIntentActivities(mainIntent, 0)
+            val appInfoUiModels = pm.queryIntentActivities(mainIntent, 0)
                 .mapNotNull { resolveInfo ->
                     // Filter out our own app
                     if (resolveInfo.activityInfo.packageName == context.packageName) {
@@ -39,7 +39,7 @@ class HomeViewModel @Inject constructor() : ViewModel() {
                 }
                 .sortedBy { it.name.lowercase() }
 
-            _apps.value = appInfos
+            _apps.value = appInfoUiModels
         }
     }
 }

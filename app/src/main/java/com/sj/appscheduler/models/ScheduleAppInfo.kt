@@ -1,13 +1,14 @@
 package com.sj.appscheduler.models
 
-import android.graphics.drawable.Drawable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class AppInfoUiModel(
+data class ScheduleAppInfo(
     @ColumnInfo val name: String,
     @PrimaryKey val packageName: String,
-    @ColumnInfo val icon: Drawable
+    @ColumnInfo val isSetAlarm: Boolean,
+    @ColumnInfo val hour: Int,
+    @ColumnInfo val minute: Int
 )
