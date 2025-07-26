@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class AppSchedule(
-    @PrimaryKey val id: Int,
-    @ColumnInfo val packageName: String,
-    @ColumnInfo val isSuccess: String
+    @PrimaryKey val packageName: String,
+    @ColumnInfo val alarmCode: Int,
+    @ColumnInfo val isSuccess: Boolean
 )

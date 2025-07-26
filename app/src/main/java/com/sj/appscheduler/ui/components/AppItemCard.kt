@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -77,14 +76,11 @@ fun AppItemCard(
 
             Spacer(modifier = Modifier.width(16.dp))
 
-//            Button(onClick = onScheduleClick) {
-//                Text("Schedule")
-//            }
-
-            Switch(
-                checked = false,
-                onCheckedChange = {
-                }
+            Text(
+                text = appInfoUiModel.time ?: "",
+                style = MaterialTheme.typography.bodySmall,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
         }
     }

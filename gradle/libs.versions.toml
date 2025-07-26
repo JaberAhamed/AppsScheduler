@@ -26,6 +26,10 @@ loggingInterceptor = "5.1.0"
 moshi = "1.15.2"
 coil = "2.6.0"
 room_version = "2.7.2"
+appcompat = "1.6.1"
+material = "1.10.0"
+activity = "1.10.1"
+constraintlayout = "2.1.4"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -70,6 +74,10 @@ play-service-location = {group = "com.google.android.gms", name = "play-services
 
 room-runtime = {group = "androidx.room", name = "room-runtime", version.ref = "room_version" }
 room = {group = "androidx.room", name = "room-compiler", version.ref = "room_version" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 
 
 

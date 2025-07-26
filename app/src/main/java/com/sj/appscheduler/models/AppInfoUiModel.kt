@@ -1,13 +1,10 @@
 package com.sj.appscheduler.models
 
 import android.graphics.drawable.Drawable
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 
-@Entity
 data class AppInfoUiModel(
-    @ColumnInfo val name: String,
-    @PrimaryKey val packageName: String,
-    @ColumnInfo val icon: Drawable
+    val name: String,
+    val packageName: String,
+    val icon: Drawable,
+    val time: String? = ""
 )

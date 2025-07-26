@@ -9,8 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -25,15 +23,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sj.appscheduler.ui.theme.AppSchedulerTheme
-import com.sj.appscheduler.utils.convertToMillis
 import java.util.Calendar
 
 @Composable
 fun ScheduleTimePicker(
     initialTimeMillis: Long? = null,
-    onSave: (Long) -> Unit,
-    onCancel: () -> Unit,
-    onUpdate: (Long) -> Unit
+    onSave: (hour: Int, minutes: Int) -> Unit,
+    onCancel: () -> Unit
 ) {
     val context = LocalContext.current
     val calendar = remember { Calendar.getInstance() }
@@ -76,24 +72,15 @@ fun ScheduleTimePicker(
 
         Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
             Button(onClick = {
-                val millis = convertToMillis(selectedHour, selectedMinute)
-                onSave(millis)
+                onSave(selectedHour, selectedMinute)
             }) {
                 Text("Save")
             }
 
             Button(
-                onClick = onCancel,
-                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.outlineVariant)
+                onClick = onCancel
             ) {
                 Text("Cancel")
-            }
-
-            Button(onClick = {
-                val millis = convertToMillis(selectedHour, selectedMinute)
-                onUpdate(millis)
-            }) {
-                Text("Update")
             }
         }
     }
@@ -119,9 +106,8 @@ fun TimePickerWithCalendarScreenPreview() {
     AppSchedulerTheme {
         ScheduleTimePicker(
             initialTimeMillis = null,
-            onSave = { millis -> Log.d("TAG", "Saved at: $millis") },
-            onCancel = { Log.d("TAG", "Cancelled") },
-            onUpdate = { millis -> Log.d("TAG", "Updated to: $millis") }
+            onSave = { hour, minutes -> Log.d("TAG", "Saved at: ") },
+            onCancel = { Log.d("TAG", "Cancelled") }
         )
     }
 }
