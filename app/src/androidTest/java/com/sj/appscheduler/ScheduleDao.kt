@@ -11,6 +11,8 @@ import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertNotNull
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
+import org.junit.After
+import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -27,6 +29,11 @@ class ScheduleDao {
             getApplicationContext(),
             AppDatabase::class.java
         ).allowMainThreadQueries().build()
+    }
+
+    @After
+    fun closeDb() {
+        database.close()
     }
 
     @Test
@@ -49,5 +56,48 @@ class ScheduleDao {
         assertEquals(schedule.isSetAlarm, loaded.isSetAlarm)
         assertEquals(schedule.hour, loaded.hour)
         assertEquals(schedule.minute, loaded.minute)
+    }
+
+    @Test
+    fun updateSchedule() = runTest {
+        val schedule = ScheduleAppInfo(
+            name = "YouTube",
+            packageName = "com.google.content.youtube",
+            isSetAlarm = true,
+            hour = 10,
+            minute = 30
+        )
+        database.appInfoDao().insertAppInfo(schedule)
+
+        val updatedSchedule = schedule.copy(
+            isSetAlarm = false,
+            hour = 15,
+            minute = 45
+        )
+        database.appInfoDao().updateAppInfo(updatedSchedule)
+
+        val loaded = database.appInfoDao().findByName(schedule.packageName)
+
+        assertNotNull(loaded)
+        assertEquals(false, loaded?.isSetAlarm)
+        assertEquals(15, loaded?.hour)
+        assertEquals(45, loaded?.minute)
+    }
+
+    @Test
+    fun deleteSchedule() = runTest {
+        val schedule = ScheduleAppInfo(
+            name = "YouTube",
+            packageName = "com.google.content.youtube",
+            isSetAlarm = true,
+            hour = 9,
+            minute = 0
+        )
+        database.appInfoDao().insertAppInfo(schedule)
+
+        database.appInfoDao().delete(schedule)
+
+        val loaded = database.appInfoDao().findByName(schedule.packageName)
+        assertNull(loaded)
     }
 }
