@@ -38,7 +38,6 @@ fun ScheduleTimePicker(
     var selectedMinute by remember { mutableStateOf(calendar.get(Calendar.MINUTE)) }
     var showTimePicker by remember { mutableStateOf(false) }
 
-    // Load initial millis if provided
     LaunchedEffect(initialTimeMillis) {
         initialTimeMillis?.let {
             calendar.timeInMillis = it

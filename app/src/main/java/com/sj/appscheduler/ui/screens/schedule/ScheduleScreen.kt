@@ -7,9 +7,12 @@ import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -53,7 +56,18 @@ fun ScheduleScreen(
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                     titleContentColor = MaterialTheme.colorScheme.onPrimary
-                )
+                ),
+                actions = {
+                    Icon(
+                        modifier = Modifier.clickable {
+                            onNavigateBack()
+                        },
+                        imageVector = androidx.compose.material.icons.Icons.Default.ArrowBackIosNew,
+                        contentDescription = "Delete",
+                        tint = MaterialTheme.colorScheme.onPrimary
+                    )
+                }
+
             )
         }
     ) { paddingValues ->

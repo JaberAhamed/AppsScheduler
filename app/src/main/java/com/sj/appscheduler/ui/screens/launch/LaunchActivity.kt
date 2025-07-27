@@ -9,10 +9,8 @@ class LaunchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // 1. Retrieve the dynamic package name from the intent
         val packageName = intent.getStringExtra("EXTRA_PACKAGE_NAME")
 
-        // 2. Check if the package name exists
         if (!packageName.isNullOrEmpty()) {
             val launchIntent = packageManager.getLaunchIntentForPackage(packageName)
 

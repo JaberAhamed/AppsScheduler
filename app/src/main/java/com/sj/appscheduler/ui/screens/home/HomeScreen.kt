@@ -1,5 +1,4 @@
 package com.sj.appscheduler.ui.screens.home // HomeScreen.kt
-import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -17,8 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,9 +23,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.sj.appscheduler.models.AppInfoUiModel
 import com.sj.appscheduler.ui.components.AppItemCard
-import com.sj.appscheduler.ui.components.ScheduleDialog
 import com.sj.appscheduler.ui.theme.AppSchedulerTheme
 import com.sj.appscheduler.utils.SelectedAppState
 
@@ -41,10 +36,6 @@ fun HomeScreen(
 ) {
     val context = LocalContext.current
     val apps by viewModel.apps.collectAsState()
-
-    // State for managing the dialog
-    var showDialog by remember { mutableStateOf(false) }
-    var selectedApp by remember { mutableStateOf<AppInfoUiModel?>(null) }
 
     LaunchedEffect(Unit) {
         viewModel.loadInstalledApps(context)
@@ -84,33 +75,12 @@ fun HomeScreen(
                     AppItemCard(
                         appInfoUiModel = app,
                         onScheduleClick = {
-                            selectedApp = app
-                            // showDialog = true
                             SelectedAppState.currentSelectedScheduleAppInfo = app
                             navigateToScheduleScreen()
                         }
                     )
                 }
             }
-        }
-
-        if (showDialog && selectedApp != null) {
-            ScheduleDialog(
-                appName = selectedApp!!.name,
-                onDismiss = { showDialog = false },
-                onSave = { scheduleType, timeValue ->
-                    // --- Here you would save the schedule ---
-                    // For now, just show a Toast message
-                    val message = "Saved: ${selectedApp!!.name} - $timeValue " +
-                        if (scheduleType == "Weekly") "hours/week" else "mins/hour"
-
-                    Toast.makeText(context, message, Toast.LENGTH_LONG).show()
-
-                    // TODO: Implement actual saving logic (e.g., to SharedPreferences or a Room database)
-
-                    showDialog = false
-                }
-            )
         }
     }
 }

@@ -78,7 +78,7 @@ fun AppItemCard(
 
             Text(
                 text = appInfoUiModel.time ?: "",
-                style = MaterialTheme.typography.bodySmall,
+                style = MaterialTheme.typography.bodyMedium,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )

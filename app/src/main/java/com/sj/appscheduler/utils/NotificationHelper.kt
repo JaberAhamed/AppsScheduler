@@ -15,16 +15,13 @@ object NotificationHelper {
     fun showBatteryNotification(context: Context, intent: Intent?) {
         val packageName = intent?.getStringExtra("EXTRA_PACKAGE_NAME")
 
-        // Ensure we have a package name to launch
         if (packageName.isNullOrEmpty()) {
             Log.e("AlarmReceiver", "Package name is missing from intent extras.")
             return
         }
 
-        // Create the Intent to launch your intermediate Activity
         val fullScreenIntent = Intent(context, LaunchActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            // Pass the dynamic package name to the LaunchingActivity
             putExtra("EXTRA_PACKAGE_NAME", packageName)
         }
 

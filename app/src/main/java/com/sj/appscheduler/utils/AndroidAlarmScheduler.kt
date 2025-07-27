@@ -18,31 +18,22 @@ class AndroidAlarmScheduler(
             putExtra("EXTRA_PACKAGE_NAME", item.packageName)
         }
 
-        // Calculate the trigger time in milliseconds
         val calendar = Calendar.getInstance().apply {
             set(Calendar.HOUR_OF_DAY, item.hour)
             set(Calendar.MINUTE, item.minute)
             set(Calendar.SECOND, 0)
             set(Calendar.MILLISECOND, 0)
 
-            // If the calculated time is in the past, add a day to schedule for tomorrow
             if (before(Calendar.getInstance())) {
                 add(Calendar.DAY_OF_YEAR, 1)
             }
         }
 
         val triggerAtMillis = calendar.timeInMillis
-
-        // Use setRepeating or setExactAndAllowWhileIdle with a calculated next day trigger
-        // For daily repeat, setRepeating is generally more appropriate if you don't need
-        // the exact "RTC_WAKEUP" behavior for every single alarm instance immediately.
-        // However, for precise daily alarms, you might reschedule in AlarmReceiver.
-        // For simplicity and matching your initial setExactAndAllowWhileIdle,
-        // we'll calculate the next day's alarm each time.
         val code = item.hashCode()
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
-            triggerAtMillis, // Use the calculated time
+            triggerAtMillis,
             PendingIntent.getBroadcast(
                 context,
                 code,
